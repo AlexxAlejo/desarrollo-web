@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CASSA NOSTRA - Restaurante Italiano</title>
+    <!-- Bootstrap 5 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Montserrat & Playfair Display -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==========================================
+           COLOR PALETTE & DESIGN SYSTEM (Italian Flag Basis)
+           Verde: #008C45 | Blanco: #FFFFFF | Rojo: #CD212A
+           Gris oscuro para texto: #1A1A1A | Fondo claro: #F9F9F9
+           ========================================== */
+        :root {
+            --italian-green: #008C45;
+            --italian-red: #CD212A;
+            --italian-white: #FFFFFF;
+            --dark-charcoal: #1A1A1A;
+            --light-bg: #F8F9FA;
+            --border-light: #E0E0E0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--dark-charcoal);
+            background-color: var(--italian-white);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* ------------------------------------------
+           FIXED NAVBAR / MENU FIJO
+           ------------------------------------------ */
+        .navbar-custom {
+            background-color: var(--italian-white);
+            border-bottom: 3px solid var(--italian-green);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .brand-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--dark-charcoal);
+            text-transform: uppercase;
+            text-decoration: none;
+            line-height: 1.1;
+        }
+
+        .brand-accent {
+            display: flex;
+            height: 4px;
+            width: 100%;
+            margin-top: 3px;
+        }
+        .brand-accent .g { background-color: var(--italian-green); flex: 1; }
+        .brand-accent .w { background-color: #DDD; flex: 1; }
+        .brand-accent .r { background-color: var(--italian-red); flex: 1; }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark-charcoal) !important;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            padding: 0.5rem 1rem !important;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--italian-green) !important;
+        }
+
+        .call-btn {
+            background-color: var(--italian-red);
+            color: var(--italian-white) !important;
+            border-radius: 50px;
+            padding: 0.5rem 1.25rem !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .call-btn:hover {
+            background-color: #B01B22;
+            color: var(--italian-white) !important;
+            transform: translateY(-1px);
+        }
+
+        /* ------------------------------------------
+           HERO SECTION (PAGE 1)
+           ------------------------------------------ */
+        .hero-section {
+            padding-top: 120px;
+            padding-bottom: 80px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,249,250,0.9) 100%),
+                        url('img/top-view-table-full-delicious-food-assortment.jpg') center/cover no-repeat;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-card {
+            background: var(--italian-white);
+            border: 1px solid var(--border-light);
+            border-left: 5px solid var(--italian-green);
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        .btn-italian-green {
+            background-color: var(--italian-green);
+            color: var(--italian-white);
+            border: none;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-italian-green:hover {
+            background-color: #007037;
+            color: var(--italian-white);
+        }
+
+        .btn-outline-italian {
+            border: 2px solid var(--italian-red);
+            color: var(--italian-red);
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-italian:hover {
+            background-color: var(--italian-red);
+            color: var(--italian-white);
+        }
+
+        /* ------------------------------------------
+           NOSOTROS SECTION (PAGE 2)
+           ------------------------------------------ */
+        .section-padding {
+            padding: 90px 0;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2.5rem;
+            font-weight: 700;
+            color: var(--dark-charcoal);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--italian-red);
+        }
+
+        .card-custom {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            background-color: var(--italian-white);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .card-mision {
+            border-top: 4px solid var(--italian-green);
+        }
+
+        .card-vision {
+            border-top: 4px solid var(--italian-red);
+        }
+
+        .img-grid-item {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 6px;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ------------------------------------------
+           TIENDA SECTION (PAGE 3)
+           ------------------------------------------ */
+        .product-card {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            background: var(--italian-white);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+            border-color: var(--italian-green);
+        }
+
+        .product-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .product-price {
+            color: var(--italian-red);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .tag-flag {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 3px;
+            background-color: #F0F0F0;
+            color: var(--dark-charcoal);
+            border-left: 3px solid var(--italian-green);
+        }
+
+        /* ------------------------------------------
+           BLOGS SECTION
+           ------------------------------------------ */
+        .blog-card {
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--italian-white);
+        }
+
+        .blog-img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        /* ------------------------------------------
+           FOOTER (FOOTHER)
+           ------------------------------------------ */
+        footer {
+            background-color: var(--dark-charcoal);
+            color: var(--italian-white);
+            border-top: 4px solid var(--italian-green);
+            padding: 50px 0 20px 0;
+        }
+
+        footer a {
+            color: #CCCCCC;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: var(--italian-white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333333;
+            padding-top: 20px;
+            margin-top: 40px;
+            font-size: 0.85rem;
+            color: #888888;
+        }
+
+        /* Decorador de Bandera Italiana */
+        .italian-stripe {
+            height: 3px;
+            display: flex;
+            width: 100%;
+        }
+        .italian-stripe .green { background-color: var(--italian-green); flex: 1; }
+        .italian-stripe .white { background-color: var(--italian-white); flex: 1; }
+        .italian-stripe .red { background-color: var(--italian-red); flex: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         MENÚ FIJO / NAVBAR (En todas las páginas)
+         ========================================== -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <!-- Brand / Logo -->
+            <a class="navbar-brand d-flex flex-column align-items-start" href="#home">
+                <img src="img/logo cassa-04.svg" alt="logo de la compañia" class=" col-10 col-sm-10 col-md-10 col-lg-4 col-xl-4">
+            </a>
+
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navigation Links & Contact -->
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 text-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#nosotros">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tienda">Tienda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#blogs">Blogs</a>
+                    </li>
+                </ul>
+                
+                <!-- Call Us / Phone CTA -->
+                <div class="d-flex justify-content-center mt-3 mt-lg-0">
+                    <a href="tel:123456789" class="call-btn">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>123 456 789 · Call Us</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ==========================================
+         PÁGINA 1: HOME / HERO SECTION
+         ========================================== -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-7 col-md-10">
+                    <div class="hero-card">
+                        <span class="tag-flag mb-3">Auténtica Cocina Italiana</span>
+                        <h1 class="display-4 fw-bold mb-3">CASSA NOSTRA</h1>
+                        <p class="lead mb-4 text-muted">
+                            Un rincón de Italia diseñado para brindarle a nuestros comensales una experiencia gastronómica única con la calidad y calidez del hogar.
+                        </p>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Decorativo sutil -->
+    <div class="italian-stripe">
+        <div class="green"></div>
+        <div class="white"></div>
+        <div class="red"></div>
+    </div>
+
+    <!-- ==========================================
+         PÁGINA 2: NOSOTROS (Misión y Visión + Fotos)
+         ========================================== -->
+    <section id="nosotros" class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title h1">Nosotros</h2>
+                <p class="text-muted max-w-600 mx-auto">Conoce el corazón de Cassa Nostra, nuestra esencia y nuestra visión de futuro.</p>
+            </div>
+
+            <!-- Galería de imágenes / Espacios para fotos -->
+            <div class="row g-3 mb-5">
+                <div class="col-md-4 col-sm-6">
+                    <img src="img/baked-lasagna-with-minced-bolognese.jpg" alt="Ambiente Cassa Nostra" class="img-grid-item shadow-sm">
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <img src="img/delicious-penne-pasta-with-tomato-sauce-fresh-basil-grated-parmesan-cheese.jpg" alt="Preparación de Pasta Artesanal" class="img-grid-item shadow-sm">
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <img src="img/fettuccine-cream-sauce-with-chicken-mushrooms.jpg" alt="Pizza Italiana Tradicional" class="img-grid-item shadow-sm">
+                </div>
+            </div>
+
+            <!-- Textos Misión y Visión (Texto exacto del PDF) -->
+            <div class="row g-4">
+                <!-- Misión -->
+                <div class="col-md-6">
+                    <div class="card-custom card-mision p-4 p-lg-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-light p-3 rounded-circle me-3 text-success">
+                                <i class="fa-solid fa-heart fa-xl" style="color: var(--italian-green);"></i>
+                            </div>
+                            <h3 class="h2 mb-0">Misión</h3>
+                        </div>
+                        <p class="card-text text-secondary" style="text-align: justify;">
+                            Cassa Nostra brinda una experiencia más allá de los gastronomico, brinda un espacio con el aroma y el calor del hogar, por eso nos esmeramos en servir un recuerdo, una anécdota y un motivo para volver y compartir con tus amigos, familia y pareja cada uno de nuestros platos tiene el sello de calidad Italiana para brindarle a nuestros comenzales una expereiencia única.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Visión -->
+                <div class="col-md-6">
+                    <div class="card-custom card-vision p-4 p-lg-5">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-light p-3 rounded-circle me-3 text-danger">
+                                <i class="fa-solid fa-compass fa-xl" style="color: var(--italian-red);"></i>
+                            </div>
+                            <h3 class="h2 mb-0">Visión</h3>
+                        </div>
+                        <p class="card-text text-secondary" style="text-align: justify;">
+                            Para el año 2030 Cassa Nostra contara con 1 restaurante en cada ciudad principal del País, asegurando la calidad y el servicio que hoy nos caracteriza y nos distingue. Además de convertirnos en una empresa que se distingue por sus buenas costumbres y trato hacia su personal qué brinda oportunidades de crecimiento constante para que sus familias..
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PÁGINA 3: TIENDA (Galería de Productos)
+         ========================================== -->
+    <section id="tienda" class="section-padding">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title h1">Tienda</h2>
+                <p class="text-muted">Lleva el auténtico sabor italiano directamente a tu mesa o disfruta en nuestro local.</p>
+            </div>
+
+            <!-- Galería de productos -->
+            <div class="row g-4">
+                <!-- Producto 1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card h-100 d-flex flex-column">
+                        <img src="img/plate-with-italian-pasta-bread.jpg" alt="Pasta Bolognese" class="product-img">
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <span class="tag-flag mb-2">Pastas</span>
+                            <h4 class="h5 mb-2">Pasta alla Bolognese</h4>
+                            <p class="small text-muted mb-3 flex-grow-1">Pasta fresca de la casa con salsa boloñesa cocinada a fuego lento.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="product-price">$14.900</span>
+                                <button class="btn btn-sm btn-italian-green"><i class="fa-solid fa-cart-plus me-1"></i> Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card h-100 d-flex flex-column">
+                        <img src="img/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table.jpg" alt="Pizza Margherita" class="product-img">
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <span class="tag-flag mb-2">Pizzas</span>
+                            <h4 class="h5 mb-2">Penne Margherita Classica</h4>
+                            <p class="small text-muted mb-3 flex-grow-1">Masa madre, tomate San Marzano, mozzarella fresca y albahaca.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="product-price">$16.500</span>
+                                <button class="btn btn-sm btn-italian-green"><i class="fa-solid fa-cart-plus me-1"></i> Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card h-100 d-flex flex-column">
+                        <img src="img/pasta-with-tomato-sauce-parmesan.jpg" alt="Tiramisú" class="product-img">
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <span class="tag-flag mb-2">Postres</span>
+                            <h4 class="h5 mb-2">Pasta Tradicional</h4>
+                            <p class="small text-muted mb-3 flex-grow-1">Elaborado con queso mascarpone, café espresso y cacao puro.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="product-price">$7.200</span>
+                                <button class="btn btn-sm btn-italian-green"><i class="fa-solid fa-cart-plus me-1"></i> Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Producto 4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card h-100 d-flex flex-column">
+                        <img src="img/fettuccine-cream-sauce-with-chicken-mushrooms.jpg" alt="Vino Italiano" class="product-img">
+                        <div class="p-3 d-flex flex-column flex-grow-1">
+                            <span class="tag-flag mb-2">Vinos</span>
+                            <h4 class="h5 mb-2">fettuccine</h4>
+                            <p class="small text-muted mb-3 flex-grow-1">Selección especial de la región de Toscana para acompañar tus platos.</p>
+                            <div class="d-flex justify-content-between align-items-center mt-auto">
+                                <span class="product-price">$28.000</span>
+                                <button class="btn btn-sm btn-italian-green"><i class="fa-solid fa-cart-plus me-1"></i> Agregar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SECCIÓN: BLOGS
+         ========================================== -->
+    <section id="blogs" class="section-padding bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title h1">Blogs</h2>
+                <p class="text-muted">Noticias, recetas y cultura gastronómica de nuestra cocina.</p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="blog-card d-flex flex-column flex-md-row">
+                        <img src="img/close-up-male-chef-preparing-spaghetti-dish.jpg" alt="El secreto de la pasta" class="blog-img col-md-5">
+                        <div class="p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <span class="text-muted small">12 Octubre, 2026</span>
+                                <h4 class="h5 mt-2">El Secreto de la Pasta Fresca</h4>
+                                <p class="small text-muted">Descubre cómo seleccionamos los mejores ingredientes italianos.</p>
+                            </div>
+                            <a href="#" class="text-danger fw-semibold small text-decoration-none">Leer más <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="blog-card d-flex flex-column flex-md-row">
+                        <img src="img/high-angle-view-healthy-pasta-cooking-pot-jute-textile-with-cherry-tomato-salad.jpg" alt="Maridaje de Vinos" class="blog-img col-md-5">
+                        <div class="p-4 d-flex flex-column justify-content-between">
+                            <div>
+                                <span class="text-muted small">05 Octubre, 2026</span>
+                                <h4 class="h5 mt-2">Guía de Maridaje de Vinos</h4>
+                                <p class="small text-muted">Aprende a combinar tu plato favorito con la cepa ideal.</p>
+                            </div>
+                            <a href="#" class="text-danger fw-semibold small text-decoration-none">Leer más <i class="fa-solid fa-arrow-right ms-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER (FOOTHER - Maqueta)
+         ========================================== -->
+    <footer>
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-md-4">
+                    <h3 class="h4 mb-3 font-serif">CASSA NOSTRA</h3>
+                    <p class="small text-secondary">
+                        Un espacio con el aroma y el calor del hogar. Tradición y calidad italiana en cada plato.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="h6 text-uppercase mb-3" style="letter-spacing: 1px;">Navegación</h4>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="#home">Home</a></li>
+                        <li class="mb-2"><a href="#nosotros">Nosotros</a></li>
+                        <li class="mb-2"><a href="#tienda">Tienda</a></li>
+                        <li class="mb-2"><a href="#blogs">Blogs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h4 class="h6 text-uppercase mb-3" style="letter-spacing: 1px;">Contacto</h4>
+                    <p class="small mb-2"><i class="fa-solid fa-phone me-2 text-danger"></i> 123 456 789</p>
+                    <p class="small mb-2"><i class="fa-solid fa-envelope me-2 text-danger"></i> info@cassanostra.com</p>
+                    <p class="small mb-0"><i class="fa-solid fa-location-dot me-2 text-danger"></i> Italia</p>
+                </div>
+            </div>
+
+            <div class="footer-bottom text-center">
+                <p class="mb-0">&copy; 2026 CASSA NOSTRA. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
